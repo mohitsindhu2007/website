@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -41,11 +41,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Loader2, Pencil, Trash, LogOut } from "lucide-react";
+import { Loader2, Pencil, Trash, LogOut, Upload, Image, ImagePlus, X } from "lucide-react";
 import LoginForm from "@/components/LoginForm";
 
 // Product form schema
@@ -79,6 +86,9 @@ const Admin = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [uploadedImages, setUploadedImages] = useState<string[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Check if user is already logged in
   useEffect(() => {
@@ -238,6 +248,72 @@ const Admin = () => {
     }
   };
 
+  // Handle image upload
+  const handleImageUpload = async (files: FileList | null) => {
+    if (!files || files.length === 0) return;
+    
+    setIsUploading(true);
+    const formData = new FormData();
+    
+    Array.from(files).forEach(file => {
+      formData.append('images', file);
+    });
+    
+    try {
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        setUploadedImages(prev => [...prev, ...result.files]);
+        toast({
+          title: "Upload successful",
+          description: `${files.length} image(s) uploaded successfully.`,
+        });
+        
+        // Update form value with the uploaded image URL
+        if (result.files.length > 0 && form.getValues('imageUrl') === '') {
+          form.setValue('imageUrl', result.files[0]);
+        }
+        
+        // Update additionalImages array (excluding the main image)
+        if (result.files.length > 1) {
+          const additionalImageUrls = result.files.slice(1);
+          form.setValue('additionalImages', [
+            ...form.getValues('additionalImages'),
+            ...additionalImageUrls
+          ]);
+        }
+      } else {
+        toast({
+          title: "Upload failed",
+          description: result.message || "Failed to upload images",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Upload failed",
+        description: "An error occurred while uploading images",
+        variant: "destructive",
+      });
+      console.error('Upload error:', error);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  // Handle remove image
+  const handleRemoveImage = (index: number) => {
+    const currentImages = form.getValues('additionalImages');
+    const updatedImages = [...currentImages];
+    updatedImages.splice(index, 1);
+    form.setValue('additionalImages', updatedImages);
+  };
+
   // Handle logout
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
@@ -383,18 +459,113 @@ const Admin = () => {
                       name="imageUrl"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Image URL</FormLabel>
-                          <FormControl>
-                            <Input 
-                              placeholder="https://example.com/image.jpg" 
-                              {...field} 
-                            />
-                          </FormControl>
+                          <FormLabel>Main Image</FormLabel>
+                          <div className="space-y-4">
+                            <FormControl>
+                              <Input 
+                                placeholder="https://example.com/image.jpg" 
+                                {...field} 
+                              />
+                            </FormControl>
+                            
+                            <div className="flex flex-col space-y-2">
+                              <div className="flex items-center gap-2">
+                                <Button 
+                                  type="button" 
+                                  variant="outline" 
+                                  onClick={() => fileInputRef.current?.click()}
+                                  disabled={isUploading}
+                                >
+                                  {isUploading ? (
+                                    <>
+                                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                      Uploading...
+                                    </>
+                                  ) : (
+                                    <>
+                                      <Upload className="mr-2 h-4 w-4" />
+                                      Upload Images
+                                    </>
+                                  )}
+                                </Button>
+                                <input
+                                  type="file"
+                                  ref={fileInputRef}
+                                  className="hidden"
+                                  accept="image/*"
+                                  multiple
+                                  onChange={(e) => handleImageUpload(e.target.files)}
+                                />
+                              </div>
+
+                              {field.value && (
+                                <div className="mt-2 border rounded-md p-2">
+                                  <div className="text-sm text-gray-500 mb-2">Main Image:</div>
+                                  <div className="relative w-full h-32 bg-gray-100 rounded-md overflow-hidden">
+                                    <img 
+                                      src={field.value} 
+                                      alt="Main product image" 
+                                      className="w-full h-full object-contain"
+                                    />
+                                  </div>
+                                </div>
+                              )}
+                            </div>
+                          </div>
                           <FormMessage />
                         </FormItem>
                       )}
                     />
 
+                    <FormField
+                      control={form.control}
+                      name="additionalImages"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Additional Images</FormLabel>
+                          <div className="space-y-4">
+                            {field.value.length > 0 ? (
+                              <div className="p-2 border rounded-md">
+                                <Carousel className="w-full max-w-full">
+                                  <CarouselContent>
+                                    {field.value.map((image, index) => (
+                                      <CarouselItem key={index} className="basis-1/3">
+                                        <div className="relative rounded-md overflow-hidden p-1">
+                                          <div className="aspect-square relative overflow-hidden rounded-md">
+                                            <img 
+                                              src={image} 
+                                              alt={`Product image ${index + 1}`} 
+                                              className="object-cover w-full h-full"
+                                            />
+                                            <Button
+                                              type="button"
+                                              variant="destructive"
+                                              size="icon"
+                                              className="absolute top-1 right-1 h-6 w-6 rounded-full"
+                                              onClick={() => handleRemoveImage(index)}
+                                            >
+                                              <X className="h-3 w-3" />
+                                            </Button>
+                                          </div>
+                                        </div>
+                                      </CarouselItem>
+                                    ))}
+                                  </CarouselContent>
+                                  <CarouselPrevious />
+                                  <CarouselNext />
+                                </Carousel>
+                              </div>
+                            ) : (
+                              <div className="text-sm text-gray-500 italic">
+                                No additional images. Upload images to add them here.
+                              </div>
+                            )}
+                          </div>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    
                     <FormField
                       control={form.control}
                       name="featured"
