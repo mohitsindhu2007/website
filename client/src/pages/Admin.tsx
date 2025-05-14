@@ -111,20 +111,19 @@ const Admin = () => {
   // Delete product mutation
   const deleteProductMutation = useMutation({
     mutationFn: async (id: number) => {
-      const response = await apiRequest("DELETE", `/api/products/${id}`);
-      return response.json();
+      return apiRequest(`/api/products/${id}`, { method: 'DELETE' });
     },
     onSuccess: () => {
-      toast({
-        title: "Product deleted",
-        description: "The product has been deleted successfully.",
-      });
       queryClient.invalidateQueries({ queryKey: ["/api/products"] });
+      toast({
+        title: "प्रोडक्ट हटा दिया गया",
+        description: "प्रोडक्ट सफलतापूर्वक हटा दिया गया है",
+      });
     },
     onError: () => {
       toast({
-        title: "Error",
-        description: "Failed to delete product. Please try again.",
+        title: "त्रुटि",
+        description: "प्रोडक्ट हटाने में विफल रहा",
         variant: "destructive",
       });
     },
