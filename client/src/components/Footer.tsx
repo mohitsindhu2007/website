@@ -24,9 +24,12 @@ const Footer = () => {
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <i className="fas fa-couch text-accent text-2xl"></i>
-              <i className="fas fa-tv text-accent text-2xl"></i>
+            <div className="flex items-center mb-4">
+              <img 
+                src="/assets/mr-sindhu-logo.png" 
+                alt="Mr Sindhu Furniture and Electronics" 
+                className="h-12 w-auto mr-2"
+              />
               <h3 className="font-poppins font-bold text-lg">Mr Sindhu</h3>
             </div>
             <p className="text-gray-300 mb-4">

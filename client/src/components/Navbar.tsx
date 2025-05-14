@@ -39,12 +39,17 @@ const Navbar = () => {
   return (
     <header className={`sticky top-0 z-50 bg-white ${isScrolled ? 'shadow-md' : 'shadow-sm'} transition-shadow`}>
       <nav className="container mx-auto px-4 py-3 flex justify-between items-center">
-        <div className="flex items-center space-x-2">
-          <i className="fas fa-couch text-primary text-2xl"></i>
-          <i className="fas fa-tv text-secondary text-2xl"></i>
+        <div className="flex items-center">
           <Link href="/">
-            <a className="font-poppins font-bold text-xl md:text-2xl hover:opacity-90 transition-opacity cursor-pointer">
-              Mr Sindhu
+            <a className="flex items-center hover:opacity-90 transition-opacity cursor-pointer">
+              <img 
+                src="/assets/mr-sindhu-logo.png" 
+                alt="Mr Sindhu Furniture and Electronics" 
+                className="h-12 w-auto mr-2"
+              />
+              <span className="font-poppins font-bold text-xl md:text-2xl">
+                Mr Sindhu
+              </span>
             </a>
           </Link>
         </div>
