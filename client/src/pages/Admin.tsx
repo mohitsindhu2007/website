@@ -55,14 +55,26 @@ import { z } from "zod";
 import { Loader2, Pencil, Trash, LogOut, Upload, Image, ImagePlus, X } from "lucide-react";
 import LoginForm from "@/components/LoginForm";
 
+// Helper function to validate image URL
+const isValidImageUrl = (url: string) => {
+  // Check if it's a server path starting with '/uploads/' or a valid URL
+  return url.startsWith('/uploads/') || url.match(/^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]*)*\/?$/);
+};
+
 // Product form schema
 const productSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   description: z.string().min(10, "Description must be at least 10 characters"),
   price: z.coerce.number().min(1, "Price must be at least 1"),
   category: z.string().min(1, "Category is required"),
-  imageUrl: z.string().url("Image URL must be a valid URL"),
-  additionalImages: z.array(z.string().url()).optional().default([]),
+  imageUrl: z.string().refine(val => isValidImageUrl(val), {
+    message: "Please provide a valid image URL or upload an image"
+  }),
+  additionalImages: z.array(
+    z.string().refine(val => isValidImageUrl(val), {
+      message: "All additional images must be valid URLs or uploaded images"
+    })
+  ).optional().default([]),
   featured: z.boolean().default(false),
   discountPrice: z.coerce.number().nullable().optional(),
 });
@@ -248,48 +260,69 @@ const Admin = () => {
   };
 
   // Handle image upload
-  const handleImageUpload = async (files: FileList | null) => {
+  const handleImageUpload = async (files: FileList | null, isEditMode = false) => {
     if (!files || files.length === 0) return;
     
-    setIsUploading(true);
-    const formData = new FormData();
-    
-    Array.from(files).forEach(file => {
-      formData.append('images', file);
-    });
-    
     try {
+      setIsUploading(true);
+      const formData = new FormData();
+      
+      // Limit the number of files to prevent crashing
+      const filesToUpload = Array.from(files).slice(0, 5); // Limit to 5 images at once
+      
+      filesToUpload.forEach(file => {
+        formData.append('images', file);
+      });
+      
+      // Show uploading toast
+      toast({
+        title: "Uploading images",
+        description: `Uploading ${filesToUpload.length} image(s)...`,
+      });
+      
       const response = await fetch('/api/upload', {
         method: 'POST',
         body: formData,
       });
       
+      if (!response.ok) {
+        throw new Error(`Server responded with status: ${response.status}`);
+      }
+      
       const result = await response.json();
       
-      if (result.success) {
+      if (result.success && result.files && result.files.length > 0) {
         const uploadedUrls = result.files;
         setUploadedImages(prev => [...prev, ...uploadedUrls]);
+        
         toast({
           title: "Upload successful",
-          description: `${files.length} image(s) uploaded successfully.`,
+          description: `${filesToUpload.length} image(s) uploaded successfully.`,
         });
         
+        // Get the current form based on mode
+        const currentForm = isEditMode ? editForm : form;
+        
         // Always set the main image if it's not already set
-        const currentMainImage = form.getValues('imageUrl');
+        const currentMainImage = currentForm.getValues('imageUrl');
         if (!currentMainImage || currentMainImage === '') {
-          form.setValue('imageUrl', uploadedUrls[0]);
+          currentForm.setValue('imageUrl', uploadedUrls[0]);
         }
         
         // Add rest of images to additionalImages array
         const remainingImages = uploadedUrls.slice(currentMainImage ? 0 : 1);
         
         if (remainingImages.length > 0) {
-          const currentAdditionalImages = form.getValues('additionalImages') || [];
-          form.setValue('additionalImages', [
+          const currentAdditionalImages = currentForm.getValues('additionalImages') || [];
+          currentForm.setValue('additionalImages', [
             ...currentAdditionalImages,
             ...remainingImages
           ]);
         }
+        
+        // Trigger form validation after setting values
+        currentForm.trigger('imageUrl');
+        currentForm.trigger('additionalImages');
       } else {
         toast({
           title: "Upload failed",
