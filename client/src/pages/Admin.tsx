@@ -268,23 +268,27 @@ const Admin = () => {
       const result = await response.json();
       
       if (result.success) {
-        setUploadedImages(prev => [...prev, ...result.files]);
+        const uploadedUrls = result.files;
+        setUploadedImages(prev => [...prev, ...uploadedUrls]);
         toast({
           title: "Upload successful",
           description: `${files.length} image(s) uploaded successfully.`,
         });
         
-        // Update form value with the uploaded image URL
-        if (result.files.length > 0 && form.getValues('imageUrl') === '') {
-          form.setValue('imageUrl', result.files[0]);
+        // Always set the main image if it's not already set
+        const currentMainImage = form.getValues('imageUrl');
+        if (!currentMainImage || currentMainImage === '') {
+          form.setValue('imageUrl', uploadedUrls[0]);
         }
         
-        // Update additionalImages array (excluding the main image)
-        if (result.files.length > 1) {
-          const additionalImageUrls = result.files.slice(1);
+        // Add rest of images to additionalImages array
+        const remainingImages = uploadedUrls.slice(currentMainImage ? 0 : 1);
+        
+        if (remainingImages.length > 0) {
+          const currentAdditionalImages = form.getValues('additionalImages') || [];
           form.setValue('additionalImages', [
-            ...form.getValues('additionalImages'),
-            ...additionalImageUrls
+            ...currentAdditionalImages,
+            ...remainingImages
           ]);
         }
       } else {
