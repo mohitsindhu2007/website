@@ -18,6 +18,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
           src={imageUrl} 
           alt={name} 
           className="w-full h-56 object-cover"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = 'https://via.placeholder.com/150?text=Image+Not+Found';
+            target.onerror = null;
+          }}
         />
         {discountPrice && (
           <Badge 

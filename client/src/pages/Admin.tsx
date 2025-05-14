@@ -243,7 +243,7 @@ const Admin = () => {
 
   // Handle delete product button click
   const handleDeleteProduct = (id: number) => {
-    if (window.confirm("Are you sure you want to delete this product?")) {
+    if (window.confirm("क्या आप वाकई इस प्रोडक्ट को हटाना चाहते हैं?")) {
       deleteProductMutation.mutate(id);
     }
   };
@@ -510,6 +510,11 @@ const Admin = () => {
                                       src={field.value} 
                                       alt="Main product image" 
                                       className="w-full h-full object-contain"
+                                      onError={(e) => {
+                                        const target = e.target as HTMLImageElement;
+                                        target.src = 'https://via.placeholder.com/150?text=Image+Not+Found';
+                                        target.onerror = null;
+                                      }}
                                     />
                                   </div>
                                 </div>
@@ -539,7 +544,12 @@ const Admin = () => {
                                             <img 
                                               src={image} 
                                               alt={`Product image ${index + 1}`} 
-                                              className="object-cover w-full h-full"
+                                              className="object-contain w-full h-full"
+                                              onError={(e) => {
+                                                const target = e.target as HTMLImageElement;
+                                                target.src = 'https://via.placeholder.com/150?text=Image+Not+Found';
+                                                target.onerror = null;
+                                              }}
                                             />
                                             <Button
                                               type="button"
