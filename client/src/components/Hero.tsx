@@ -14,7 +14,8 @@ const Hero = () => {
             <h1 className="font-poppins font-bold text-4xl md:text-5xl mb-4 animate-fade-in">
               Mr Sindhu Furniture and Electronics
             </h1>
-            <p className="text-xl md:text-2xl mb-8 animate-slide-up">Quality Meets Style</p>
+            <p className="text-xl md:text-2xl mb-2 animate-slide-up">Quality Meets Style</p>
+            <p className="text-lg mb-8 animate-slide-up">Shop No. 82, New Anaaj Mandi, Kalanaur, Rohtak</p>
             <div className="flex flex-wrap gap-4">
               <Link href="/products">
                 <Button 

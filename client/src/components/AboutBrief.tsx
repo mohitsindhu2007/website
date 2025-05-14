@@ -7,8 +7,8 @@ const AboutBrief = () => {
         <div className="text-center max-w-3xl mx-auto mb-12">
           <h2 className="font-poppins font-bold text-3xl mb-4">Welcome to Mr Sindhu Furniture and Electronics</h2>
           <p className="text-gray-600">
-            Established in 2005, we are a premier destination for quality furniture and cutting-edge electronics 
-            in the region. With a commitment to excellence and customer satisfaction, we offer a wide range of 
+            Established by Mr. Jombir Sindhu, we are a premier destination for quality furniture and cutting-edge electronics 
+            in Kalanaur, Rohtak. With a commitment to excellence and customer satisfaction, we offer a wide range of 
             products to make your home comfortable and smart.
           </p>
         </div>

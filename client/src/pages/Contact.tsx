@@ -38,7 +38,7 @@ const Contact = () => {
                       </div>
                       <div>
                         <h4 className="font-poppins font-semibold">Address</h4>
-                        <p className="text-gray-600">123 Main Market, Sector 15<br/>Gurgaon, Haryana 122001</p>
+                        <p className="text-gray-600">Shop No. 82, New Anaaj Mandi<br/>Kalanaur, Rohtak, Haryana</p>
                       </div>
                     </div>
                     
@@ -58,7 +58,7 @@ const Contact = () => {
                       </div>
                       <div>
                         <h4 className="font-poppins font-semibold">Email</h4>
-                        <p className="text-gray-600">info@mrsindhu.com</p>
+                        <p className="text-gray-600">jombirsindhu@gmail.com</p>
                       </div>
                     </div>
                     
@@ -78,13 +78,14 @@ const Contact = () => {
               <div className="rounded-lg overflow-hidden shadow-md h-80">
                 {/* Google Map Embed */}
                 <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3506.7192551083716!2d77.01970931508375!3d28.49151398247367!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d19c68074edd5%3A0x9ddb98384b509de1!2sSector%2015%2C%20Gurugram%2C%20Haryana%20122001!5e0!3m2!1sen!2sin!4v1622710456783!5m2!1sen!2sin" 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d13890.408610548845!2d76.40203695!3d29.0372885!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391251d1779ce8a5%3A0x9f98c4b38610ebb5!2sNew%20Anaj%20Mandi%2C%20Kalanaur%2C%20Haryana%20124113!5e0!3m2!1sen!2sin!4v1684900788548!5m2!1sen!2sin" 
                   width="100%" 
                   height="100%" 
                   style={{ border: 0 }} 
                   allowFullScreen={true} 
                   loading="lazy"
-                  title="Store Location"
+                  title="Mr Sindhu Furniture and Electronics - Shop No. 82, New Anaj Mandi, Kalanaur"
+                  referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>
               </div>
             </div>

@@ -1,3 +1,6 @@
+/* Custom font styles */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -90,9 +93,6 @@
     @apply font-sans antialiased bg-background text-foreground;
   }
 }
-
-/* Custom font styles */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Open+Sans:wght@400;600&display=swap');
 
 .font-poppins {
   font-family: 'Poppins', sans-serif;
