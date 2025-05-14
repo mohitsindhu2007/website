@@ -27,6 +27,7 @@ async function runMigrations() {
         price INTEGER NOT NULL,
         category TEXT NOT NULL,
         image_url TEXT NOT NULL,
+        additional_images TEXT[],
         featured BOOLEAN DEFAULT FALSE,
         discount_price INTEGER
       );

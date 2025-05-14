@@ -3,8 +3,42 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertContactMessageSchema, insertProductSchema } from "@shared/schema";
 import { z } from "zod";
+import { upload } from "./uploads.js";
+import path from "path";
+import express from "express";
+import { fileURLToPath } from 'url';
+
+// Get directory name in ESM
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Set up storage of uploaded images
+  app.use('/uploads', express.static(path.join(__dirname, '..', 'uploads')));
+  
+  // Image upload endpoint
+  app.post('/api/upload', upload.array('images', 5), (req, res) => {
+    try {
+      if (!req.files || (Array.isArray(req.files) && req.files.length === 0)) {
+        return res.status(400).json({ success: false, message: 'No files uploaded' });
+      }
+      
+      const files = Array.isArray(req.files) ? req.files : [req.files];
+      const fileUrls = files.map(file => `/uploads/${file.filename}`);
+      
+      return res.status(200).json({
+        success: true,
+        message: 'Files uploaded successfully',
+        files: fileUrls
+      });
+    } catch (error) {
+      console.error('Upload error:', error);
+      return res.status(500).json({
+        success: false,
+        message: 'Error uploading files'
+      });
+    }
+  });
   // Get all products
   app.get("/api/products", async (req, res) => {
     try {

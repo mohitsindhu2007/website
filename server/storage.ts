@@ -143,6 +143,7 @@ export class DatabaseStorage implements IStorage {
         price: 32000,
         category: "Furniture",
         imageUrl: "https://images.unsplash.com/photo-1530018607912-eff2daa1bac4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+        additionalImages: [],
         featured: true,
       });
 
@@ -152,6 +153,7 @@ export class DatabaseStorage implements IStorage {
         price: 15000,
         category: "Furniture",
         imageUrl: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+        additionalImages: [],
         featured: true,
       });
 
@@ -161,6 +163,7 @@ export class DatabaseStorage implements IStorage {
         price: 55000,
         category: "Furniture",
         imageUrl: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+        additionalImages: [],
         featured: true,
       });
 
@@ -170,6 +173,7 @@ export class DatabaseStorage implements IStorage {
         price: 85000,
         category: "Furniture",
         imageUrl: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+        additionalImages: [],
         featured: true,
         discountPrice: 75000,
       });
@@ -181,6 +185,7 @@ export class DatabaseStorage implements IStorage {
         price: 58000,
         category: "Electronics",
         imageUrl: "https://images.unsplash.com/photo-1593305841991-05c297ba4575?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+        additionalImages: [],
         featured: true,
       });
 
@@ -190,6 +195,7 @@ export class DatabaseStorage implements IStorage {
         price: 42000,
         category: "Electronics",
         imageUrl: "https://images.unsplash.com/photo-1571175443880-49e1d25b2bc5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&h=400",
+        additionalImages: [],
         featured: true,
       });
 
@@ -199,6 +205,7 @@ export class DatabaseStorage implements IStorage {
         price: 23000,
         category: "Electronics",
         imageUrl: "https://images.pexels.com/photos/5816260/pexels-photo-5816260.jpeg?auto=compress&cs=tinysrgb&w=600&h=400",
+        additionalImages: [],
         featured: true,
         discountPrice: 19999,
       });
