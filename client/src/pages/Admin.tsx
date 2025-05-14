@@ -101,6 +101,7 @@ const Admin = () => {
   const [uploadedImages, setUploadedImages] = useState<string[]>([]);
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const fileInputEditRef = useRef<HTMLInputElement>(null);
 
   // Check if user is already logged in
   useEffect(() => {
@@ -530,7 +531,7 @@ const Admin = () => {
                                   className="hidden"
                                   accept="image/*"
                                   multiple
-                                  onChange={(e) => handleImageUpload(e.target.files)}
+                                  onChange={(e) => handleImageUpload(e.target.files, false)}
                                 />
                               </div>
 
@@ -878,12 +879,114 @@ const Admin = () => {
                 name="imageUrl"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Image URL</FormLabel>
+                    <FormLabel>Main Image</FormLabel>
+                    <div className="space-y-4">
+                      <FormControl>
+                        <Input 
+                          placeholder="https://example.com/image.jpg" 
+                          {...field} 
+                        />
+                      </FormControl>
+                      
+                      <div className="flex flex-col space-y-2">
+                        <div className="flex items-center gap-2">
+                          <Button 
+                            type="button" 
+                            variant="outline" 
+                            onClick={() => fileInputEditRef.current?.click()}
+                            disabled={isUploading}
+                            className="w-full"
+                          >
+                            {isUploading ? (
+                              <>
+                                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                                Uploading...
+                              </>
+                            ) : (
+                              <>
+                                <Upload className="mr-2 h-4 w-4" />
+                                Upload Images
+                              </>
+                            )}
+                          </Button>
+                          <input 
+                            type="file"
+                            ref={fileInputEditRef}
+                            className="hidden"
+                            accept="image/*"
+                            multiple
+                            onChange={(e) => handleImageUpload(e.target.files, true)}
+                          />
+                        </div>
+                        
+                        {field.value && (
+                          <div className="mt-2 border rounded-md p-2">
+                            <div className="text-sm text-gray-500 mb-2">Main Image:</div>
+                            <div className="relative w-full h-32 bg-gray-100 rounded-md overflow-hidden">
+                              <img 
+                                src={field.value} 
+                                alt="Main product image" 
+                                className="w-full h-full object-contain"
+                                onError={(e) => {
+                                  const target = e.target as HTMLImageElement;
+                                  target.src = 'https://via.placeholder.com/150?text=Image+Not+Found';
+                                  target.onerror = null;
+                                }}
+                              />
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={editForm.control}
+                name="additionalImages"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Additional Images</FormLabel>
                     <FormControl>
-                      <Input 
-                        placeholder="https://example.com/image.jpg" 
-                        {...field} 
-                      />
+                      <div>
+                        {field.value && field.value.length > 0 ? (
+                          <div className="grid grid-cols-2 gap-4 mb-4">
+                            {field.value.map((url, index) => (
+                              <div key={index} className="relative border rounded-md overflow-hidden">
+                                <img 
+                                  src={url} 
+                                  alt={`Additional image ${index + 1}`}
+                                  className="w-full h-32 object-contain"
+                                  onError={(e) => {
+                                    const target = e.target as HTMLImageElement;
+                                    target.src = 'https://via.placeholder.com/150?text=Image+Not+Found';
+                                    target.onerror = null;
+                                  }}
+                                />
+                                <Button 
+                                  type="button"
+                                  variant="destructive"
+                                  size="sm"
+                                  className="absolute top-2 right-2 w-6 h-6 p-0"
+                                  onClick={() => {
+                                    const currentImages = [...field.value];
+                                    currentImages.splice(index, 1);
+                                    editForm.setValue('additionalImages', currentImages);
+                                  }}
+                                >
+                                  <X className="h-3 w-3" />
+                                </Button>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="text-sm text-gray-500 mb-4">
+                            No additional images. Upload multiple images to add them here.
+                          </div>
+                        )}
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
