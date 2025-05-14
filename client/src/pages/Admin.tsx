@@ -55,6 +55,7 @@ const productSchema = z.object({
   price: z.coerce.number().min(1, "Price must be at least 1"),
   category: z.string().min(1, "Category is required"),
   imageUrl: z.string().url("Image URL must be a valid URL"),
+  additionalImages: z.array(z.string().url()).optional().default([]),
   featured: z.boolean().default(false),
   discountPrice: z.coerce.number().nullable().optional(),
 });
@@ -128,6 +129,7 @@ const Admin = () => {
       price: 0,
       category: "",
       imageUrl: "",
+      additionalImages: [],
       featured: false,
       discountPrice: null,
     },
@@ -189,6 +191,7 @@ const Admin = () => {
       price: 0,
       category: "",
       imageUrl: "",
+      additionalImages: [],
       featured: false,
       discountPrice: null,
     },
@@ -203,6 +206,7 @@ const Admin = () => {
         price: currentProduct.price,
         category: currentProduct.category,
         imageUrl: currentProduct.imageUrl,
+        additionalImages: currentProduct.additionalImages || [],
         featured: currentProduct.featured || false,
         discountPrice: currentProduct.discountPrice || null,
       });
