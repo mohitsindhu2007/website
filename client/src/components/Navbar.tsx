@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
+import CartComponent from "@/components/CartComponent";
 
 const Navbar = () => {
   const [location] = useLocation();
@@ -57,30 +58,36 @@ const Navbar = () => {
               </a>
             </Link>
           ))}
+          <div className="ml-2">
+            <CartComponent />
+          </div>
         </div>
         
         {/* Mobile Navigation */}
-        <Sheet open={isOpen} onOpenChange={setIsOpen}>
-          <SheetTrigger asChild>
-            <Button variant="ghost" className="md:hidden p-2">
-              <Menu className="h-6 w-6" />
-            </Button>
-          </SheetTrigger>
-          <SheetContent side="right" className="w-[250px] sm:w-[300px]">
-            <div className="flex flex-col mt-8 space-y-4">
-              {navigationItems.map((item) => (
-                <Link key={item.name} href={item.path}>
-                  <a 
-                    className={`font-poppins font-medium py-2 transition-colors ${location === item.path ? 'text-primary' : 'hover:text-primary'}`}
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {item.name}
-                  </a>
-                </Link>
-              ))}
-            </div>
-          </SheetContent>
-        </Sheet>
+        <div className="md:hidden flex items-center space-x-2">
+          <CartComponent />
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
+            <SheetTrigger asChild>
+              <Button variant="ghost" className="p-2">
+                <Menu className="h-6 w-6" />
+              </Button>
+            </SheetTrigger>
+            <SheetContent side="right" className="w-[250px] sm:w-[300px]">
+              <div className="flex flex-col mt-8 space-y-4">
+                {navigationItems.map((item) => (
+                  <Link key={item.name} href={item.path}>
+                    <a 
+                      className={`font-poppins font-medium py-2 transition-colors ${location === item.path ? 'text-primary' : 'hover:text-primary'}`}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.name}
+                    </a>
+                  </Link>
+                ))}
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
       </nav>
     </header>
   );
