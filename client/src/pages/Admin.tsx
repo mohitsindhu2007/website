@@ -111,7 +111,7 @@ const Admin = () => {
   // Delete product mutation
   const deleteProductMutation = useMutation({
     mutationFn: async (id: number) => {
-      return apiRequest(`/api/products/${id}`, { method: 'DELETE' });
+      return apiRequest("DELETE", `/api/products/${id}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/products"] });
