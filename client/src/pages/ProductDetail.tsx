@@ -111,7 +111,32 @@ const ProductDetail = () => {
                     src={product.imageUrl} 
                     alt={product.name} 
                     className="w-full h-auto object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = 'https://via.placeholder.com/150?text=Image+Not+Found';
+                      target.onerror = null;
+                    }}
                   />
+                  
+                  {/* Show additional images if available */}
+                  {product.additionalImages && product.additionalImages.length > 0 && (
+                    <div className="mt-4 grid grid-cols-4 gap-2">
+                      {product.additionalImages.map((img, idx) => (
+                        <div key={idx} className="border rounded overflow-hidden">
+                          <img 
+                            src={img} 
+                            alt={`${product.name} view ${idx+1}`}
+                            className="w-full h-20 object-cover" 
+                            onError={(e) => {
+                              const target = e.target as HTMLImageElement;
+                              target.src = 'https://via.placeholder.com/150?text=Image+Not+Found';
+                              target.onerror = null;
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
               </div>
               
