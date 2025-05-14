@@ -156,7 +156,7 @@ const ProductDetail = () => {
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
                   {/* Main large image with zoom functionality */}
                   <div className="relative bg-gray-100 h-[400px] flex items-center justify-center overflow-hidden">
-                    <Zoom>
+                    <Zoom zoomMargin={40}>
                       <img 
                         src={selectedImage || product.imageUrl}
                         alt={product.name} 
