@@ -58,7 +58,7 @@ const Contact = () => {
                       </div>
                       <div>
                         <h4 className="font-poppins font-semibold">Email</h4>
-                        <p className="text-gray-600">jombirsindhu@gmail.com</p>
+                        <p className="text-gray-600">mohitsindhu121@gmail.com</p>
                       </div>
                     </div>
                     
@@ -78,7 +78,7 @@ const Contact = () => {
               <div className="rounded-lg overflow-hidden shadow-md h-80">
                 {/* Google Map Embed - Precise Location */}
                 <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3491.0175795486683!2d76.39897357497818!3d29.037293975516103!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391251d1779ce8a5%3A0x9f98c4b38610ebb5!2sNew%20Anaj%20Mandi%2C%20Kalanaur%2C%20Haryana%20124113!5e0!3m2!1sen!2sin!4v1684900788548!5m2!1sen!2sin" 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d883.2534088507662!2d76.40137509048496!3d29.036904149671077!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391251d2dcafb0bd%3A0x4bdb02651d833c74!2sMr%20Sindhu%20Furniture%20%26%20Electronics!5e0!3m2!1sen!2sin!4v1684900788548!5m2!1sen!2sin" 
                   width="100%" 
                   height="100%" 
                   style={{ border: 0 }} 

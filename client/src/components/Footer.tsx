@@ -127,7 +127,7 @@ const Footer = () => {
               <i className="fas fa-headset text-accent text-2xl mr-3"></i>
               <div>
                 <p className="text-sm">Customer Support</p>
-                <p className="font-bold">+91 98765 43210</p>
+                <p className="font-bold">+91 9992264440</p>
               </div>
             </div>
           </div>

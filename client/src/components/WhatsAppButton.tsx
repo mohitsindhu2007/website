@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const WhatsAppButton = () => {
-  const phoneNumber = "919876543210"; // Replace with actual number
+  const phoneNumber = "919992264440"; // Mr Sindhu's contact number
 
   return (
     <TooltipProvider>
