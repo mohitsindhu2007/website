@@ -33,7 +33,7 @@ const About = () => {
             <div>
               <h3 className="font-poppins font-bold text-2xl mb-4">Our Story</h3>
               <p className="text-gray-700 mb-4">
-                Founded by Mr. Jombir Sindhu, our store began as a small furniture shop in Kalanaur with a vision 
+                Founded by Mr. Mohit Sindhu, our store began as a small furniture shop in Kalanaur with a vision 
                 to provide quality furniture at reasonable prices. Over the years, we expanded our product range 
                 to include electronics, becoming a one-stop destination for all home needs.
               </p>
@@ -91,7 +91,7 @@ const About = () => {
                   <i className="fas fa-user text-gray-500 text-2xl"></i>
                 </div>
                 <div>
-                  <h4 className="font-poppins font-semibold">Mr. Jombir Sindhu</h4>
+                  <h4 className="font-poppins font-semibold">Mr. Mohit Sindhu</h4>
                   <p className="text-gray-600">Founder & Owner</p>
                 </div>
               </div>
