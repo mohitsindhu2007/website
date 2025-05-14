@@ -77,6 +77,15 @@ const Admin = () => {
   const [selectedTab, setSelectedTab] = useState("products");
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Check if user is already logged in
+  useEffect(() => {
+    const loggedInStatus = localStorage.getItem("isLoggedIn");
+    if (loggedInStatus === "true") {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   // Fetch products
   const { data: products, isLoading: isLoadingProducts } = useQuery<Product[]>({
@@ -225,9 +234,29 @@ const Admin = () => {
     }
   };
 
+  // Handle logout
+  const handleLogout = () => {
+    localStorage.removeItem("isLoggedIn");
+    setIsLoggedIn(false);
+    toast({
+      title: "Logged out",
+      description: "You have been successfully logged out.",
+    });
+  };
+  
+  if (!isLoggedIn) {
+    return <LoginForm onLoginSuccess={() => setIsLoggedIn(true)} />;
+  }
+
   return (
     <div className="container mx-auto py-10 px-4">
-      <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
+      <div className="flex justify-between items-center mb-8">
+        <h1 className="text-3xl font-bold">Admin Dashboard</h1>
+        <Button variant="outline" onClick={handleLogout}>
+          <LogOut className="h-4 w-4 mr-2" />
+          Logout
+        </Button>
+      </div>
 
       <Tabs value={selectedTab} onValueChange={setSelectedTab}>
         <TabsList className="mb-8">
