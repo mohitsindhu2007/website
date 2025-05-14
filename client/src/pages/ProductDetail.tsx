@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useParams, Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
@@ -9,11 +9,15 @@ import ProductCard from "@/components/ProductCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
 import { Product } from "@shared/schema";
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
 
 const ProductDetail = () => {
   const { id } = useParams();
   const { toast } = useToast();
-  const productId = parseInt(id);
+  const productId = parseInt(id || '0');
+  const [selectedImage, setSelectedImage] = useState<string>('');
+  const [cartItems, setCartItems] = useState<Product[]>([]);
 
   const { data: product, isLoading: isProductLoading } = useQuery<Product>({
     queryKey: [`/api/products/${productId}`],
@@ -29,6 +33,26 @@ const ProductDetail = () => {
         p.id !== product?.id
       ).slice(0, 4),
   });
+
+  // Set up the selected image when product data loads
+  useEffect(() => {
+    if (product && product.imageUrl) {
+      setSelectedImage(product.imageUrl);
+    }
+  }, [product]);
+
+  // Load cart from localStorage
+  useEffect(() => {
+    const savedCart = localStorage.getItem('cart');
+    if (savedCart) {
+      try {
+        const parsedCart = JSON.parse(savedCart);
+        setCartItems(parsedCart);
+      } catch (error) {
+        console.error('Failed to parse cart data:', error);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -47,11 +71,34 @@ const ProductDetail = () => {
   }
 
   const handleAddToCart = () => {
-    toast({
-      title: "Added to cart!",
-      description: `${product?.name} has been added to your cart.`,
-      variant: "default",
-    });
+    if (!product) return;
+    
+    // Check if product is already in cart
+    const isInCart = cartItems.some(item => item.id === product.id);
+    let updatedCart;
+    
+    if (isInCart) {
+      // Update quantity logic could be added here
+      toast({
+        title: "Already in cart",
+        description: `${product.name} is already in your cart.`,
+        variant: "default",
+      });
+      return;
+    } else {
+      // Add to cart
+      updatedCart = [...cartItems, product];
+      setCartItems(updatedCart);
+      
+      // Save to localStorage
+      localStorage.setItem('cart', JSON.stringify(updatedCart));
+      
+      toast({
+        title: "Added to cart!",
+        description: `${product.name} has been added to your cart.`,
+        variant: "default",
+      });
+    }
   };
 
   const handleContactUs = () => {
@@ -107,26 +154,53 @@ const ProductDetail = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               <div>
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
-                  <img 
-                    src={product.imageUrl} 
-                    alt={product.name} 
-                    className="w-full h-auto object-cover"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = 'https://via.placeholder.com/150?text=Image+Not+Found';
-                      target.onerror = null;
-                    }}
-                  />
+                  {/* Main large image with zoom functionality */}
+                  <div className="relative bg-gray-100 h-[400px] flex items-center justify-center overflow-hidden">
+                    <Zoom>
+                      <img 
+                        src={selectedImage || product.imageUrl}
+                        alt={product.name} 
+                        className="max-w-full max-h-[400px] object-contain"
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = 'https://via.placeholder.com/150?text=Image+Not+Found';
+                          target.onerror = null;
+                        }}
+                      />
+                    </Zoom>
+                  </div>
                   
-                  {/* Show additional images if available */}
-                  {product.additionalImages && product.additionalImages.length > 0 && (
-                    <div className="mt-4 grid grid-cols-4 gap-2">
-                      {product.additionalImages.map((img, idx) => (
-                        <div key={idx} className="border rounded overflow-hidden">
+                  {/* Thumbnails for all images (main + additional) */}
+                  <div className="mt-4 grid grid-cols-5 gap-2">
+                    {/* Main image thumbnail */}
+                    <div 
+                      className={`border-2 rounded-md overflow-hidden cursor-pointer transition-all ${selectedImage === product.imageUrl ? 'border-primary' : 'border-gray-200 hover:border-gray-300'}`}
+                      onClick={() => setSelectedImage(product.imageUrl)}
+                    >
+                      <img 
+                        src={product.imageUrl} 
+                        alt={`${product.name} main view`}
+                        className="w-full h-16 object-cover" 
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = 'https://via.placeholder.com/150?text=Image+Not+Found';
+                          target.onerror = null;
+                        }}
+                      />
+                    </div>
+                    
+                    {/* Additional images thumbnails */}
+                    {product.additionalImages && product.additionalImages.length > 0 && 
+                      product.additionalImages.map((img, idx) => (
+                        <div 
+                          key={idx} 
+                          className={`border-2 rounded-md overflow-hidden cursor-pointer transition-all ${selectedImage === img ? 'border-primary' : 'border-gray-200 hover:border-gray-300'}`}
+                          onClick={() => setSelectedImage(img)}
+                        >
                           <img 
                             src={img} 
                             alt={`${product.name} view ${idx+1}`}
-                            className="w-full h-20 object-cover" 
+                            className="w-full h-16 object-cover" 
                             onError={(e) => {
                               const target = e.target as HTMLImageElement;
                               target.src = 'https://via.placeholder.com/150?text=Image+Not+Found';
@@ -134,9 +208,9 @@ const ProductDetail = () => {
                             }}
                           />
                         </div>
-                      ))}
-                    </div>
-                  )}
+                      ))
+                    }
+                  </div>
                 </div>
               </div>
               
