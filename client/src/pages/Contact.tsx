@@ -80,16 +80,26 @@ const Contact = () => {
               
               <div className="rounded-lg overflow-hidden shadow-md h-80">
                 {/* Google Map Embed - Precise Location */}
-                <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3490.9158179820075!2d76.39937799999999!3d28.981057399999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d84ab51df8ebf%3A0xb5f4118fa6cf3abb!2sMr%20Sindhu%20Furniture%20%26%20electronics!5e0!3m2!1sen!2sin!4v1716060002809!5m2!1sen!2sin" 
-                  width="100%" 
-                  height="100%" 
-                  style={{ border: 0 }} 
-                  allowFullScreen={true} 
-                  loading="lazy"
-                  title="Mr Sindhu Furniture and Electronics - New Anaaj Mandi, Kalanaur, Rohtak, Haryana"
-                  referrerPolicy="no-referrer-when-downgrade"
-                ></iframe>
+                <div className="relative h-full">
+                  <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3490.9158179820075!2d76.39937799999999!3d28.981057399999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d84ab51df8ebf%3A0xb5f4118fa6cf3abb!2sMr%20Sindhu%20Furniture%20%26%20electronics!5e0!3m2!1sen!2sin!4v1716060002809!5m2!1sen!2sin" 
+                    width="100%" 
+                    height="100%" 
+                    style={{ border: 0 }} 
+                    allowFullScreen={true} 
+                    loading="lazy"
+                    title="Mr Sindhu Furniture and Electronics - New Anaaj Mandi, Kalanaur, Rohtak, Haryana"
+                    referrerPolicy="no-referrer-when-downgrade"
+                  ></iframe>
+                  <a 
+                    href="https://maps.app.goo.gl/7QY6MTh4RhhobBCh7"
+                    target="_blank"
+                    rel="noopener noreferrer" 
+                    className="absolute bottom-4 right-4 bg-primary text-white px-4 py-2 rounded-lg shadow-lg hover:bg-primary/90 transition-colors"
+                  >
+                    Open in Google Maps
+                  </a>
+                </div>
               </div>
             </div>
           </div>
