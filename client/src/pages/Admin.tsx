@@ -468,10 +468,36 @@ const Admin = () => {
 
                     <FormField
                       control={form.control}
+                      name="condition"
+                      render={({ field }) => (
+                        <FormItem className="w-full">
+                          <FormLabel className="text-base">Product Condition</FormLabel>
+                          <Select 
+                            onValueChange={field.onChange} 
+                            defaultValue={field.value || "New"}
+                          >
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select condition" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="New">New</SelectItem>
+                              <SelectItem value="Refurbished">Refurbished</SelectItem>
+                              <SelectItem value="Used">Used</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
                       name="category"
                       render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Category</FormLabel>
+                        <FormItem className="w-full">
+                          <FormLabel className="text-base">Product Category</FormLabel>
                           <Select 
                             onValueChange={field.onChange} 
                             defaultValue={field.value}
@@ -484,6 +510,7 @@ const Admin = () => {
                             <SelectContent>
                               <SelectItem value="Furniture">Furniture</SelectItem>
                               <SelectItem value="Electronics">Electronics</SelectItem>
+                              <SelectItem value="Refurbished">Refurbished</SelectItem>
                             </SelectContent>
                           </Select>
                           <FormMessage />
