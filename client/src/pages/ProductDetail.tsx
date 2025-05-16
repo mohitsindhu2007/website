@@ -312,6 +312,42 @@ const ProductDetail = () => {
                   </CardContent>
                 </Card>
               )}
+            {/* Product Reviews Section */}
+              <div className="mt-16">
+                <h2 className="font-poppins font-bold text-2xl mb-8">Customer Reviews</h2>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <div className="bg-white p-8 rounded-lg shadow-md">
+                    <h3 className="font-semibold text-xl mb-6">Write a Review</h3>
+                    <ProductReviewForm productId={product.id} />
+                  </div>
+                  
+                  <div className="bg-white p-8 rounded-lg shadow-md">
+                    <h3 className="font-semibold text-xl mb-6">Recent Reviews</h3>
+                    {product.reviews && product.reviews.length > 0 ? (
+                      <div className="space-y-4">
+                        {product.reviews.map((review) => (
+                          <div key={review.id} className="border-b pb-4">
+                            <div className="flex justify-between items-center mb-2">
+                              <span className="font-medium">{review.name}</span>
+                              <span className="text-sm text-gray-500">
+                                {new Date(review.createdAt).toLocaleDateString()}
+                              </span>
+                            </div>
+                            <div className="flex items-center mb-2">
+                              {Array.from({ length: review.rating }).map((_, i) => (
+                                <i key={i} className="fas fa-star text-yellow-400"></i>
+                              ))}
+                            </div>
+                            <p className="text-gray-600">{review.review}</p>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-gray-500">No reviews yet. Be the first to review this product!</p>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           </>
         ) : (

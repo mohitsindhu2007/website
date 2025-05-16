@@ -127,6 +127,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get product reviews
+  app.get("/api/products/:id/reviews", async (req, res) => {
+    try {
+      const id = parseInt(req.params.id);
+      if (isNaN(id)) {
+        return res.status(400).json({ message: "Invalid product ID" });
+      }
+      const reviews = await storage.getProductReviews(id);
+      return res.json(reviews);
+    } catch (error) {
+      return res.status(500).json({ message: "Failed to fetch reviews" });
+    }
+  });
+
+  // Add product review
+  app.post("/api/products/:id/reviews", async (req, res) => {
+    try {
+      const productId = parseInt(req.params.id);
+      if (isNaN(productId)) {
+        return res.status(400).json({ message: "Invalid product ID" });
+      }
+      const reviewData = { ...req.body, productId };
+      const newReview = await storage.createProductReview(reviewData);
+      return res.status(201).json(newReview);
+    } catch (error) {
+      return res.status(500).json({ message: "Failed to create review" });
+    }
+  });
+
   // Delete a product
   app.delete("/api/products/:id", async (req, res) => {
     try {
