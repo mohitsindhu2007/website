@@ -157,18 +157,30 @@ const ProductDetail = () => {
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
                   {/* Main large image with zoom functionality */}
                   <div className="relative bg-gray-100 h-[400px] flex items-center justify-center overflow-hidden">
-                    <Zoom zoomMargin={40}>
-                      <img 
+                    {(selectedImage || product.imageUrl).toLowerCase().endsWith('.mp4') ? (
+                      <video 
                         src={selectedImage || product.imageUrl}
-                        alt={product.name} 
+                        alt={product.name}
                         className="max-w-full max-h-[400px] object-contain"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = 'https://via.placeholder.com/150?text=Image+Not+Found';
-                          target.onerror = null;
-                        }}
+                        controls
+                        autoPlay
+                        loop
+                        muted
                       />
-                    </Zoom>
+                    ) : (
+                      <Zoom zoomMargin={40}>
+                        <img
+                          src={selectedImage || product.imageUrl}
+                          alt={product.name}
+                          className="max-w-full max-h-[400px] object-contain"
+                          onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+                            target.src = 'https://via.placeholder.com/150?text=Image+Not+Found';
+                            target.onerror = null;
+                          }}
+                        />
+                      </Zoom>
+                    )}
                   </div>
 
                   {/* Thumbnails for all images (main + additional) */}
