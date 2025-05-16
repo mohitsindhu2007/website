@@ -43,10 +43,10 @@ const Footer = () => {
               <a href="https://instagram.com/mr.sindhu" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-accent transition-colors">
                 <i className="fab fa-instagram"></i>
               </a>
-              <a href="https://youtube.com/@MrSindhuFurniture" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-accent transition-colors">
+              <a href="https://youtube.com/@officialowner1?si=27NuGb6T2vGVGjsE" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-accent transition-colors">
                 <i className="fab fa-youtube"></i>
               </a>
-              <a href="https://chat.whatsapp.com/JLWrG4KGG7S4YZDXHxq7SI" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-accent transition-colors">
+              <a href="https://chat.whatsapp.com/Er8ZCz3vwJ1ATvvzMCOxUj" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-accent transition-colors">
                 <i className="fab fa-whatsapp"></i>
               </a>
             </div>
