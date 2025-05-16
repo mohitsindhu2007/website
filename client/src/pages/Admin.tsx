@@ -561,7 +561,7 @@ const Admin = () => {
                                   type="file"
                                   ref={fileInputRef}
                                   className="hidden"
-                                  accept="image/*"
+                                  accept="image/*,video/*"
                                   multiple
                                   onChange={(e) => handleImageUpload(e.target.files, false)}
                                 />

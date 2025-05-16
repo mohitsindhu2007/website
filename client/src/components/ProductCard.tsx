@@ -47,12 +47,26 @@ const ProductCard = ({ product }: ProductCardProps) => {
       }`}
     >
       <div className="relative overflow-hidden group">
-        <img 
-          src={displayImage} 
-          alt={name} 
-          className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110"
-          onError={handleImageError}
-        />
+        {imageUrl.toLowerCase().endsWith('.mp4') || imageUrl.toLowerCase().endsWith('.webm') ? (
+          <video 
+            src={imageUrl}
+            className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110"
+            controls
+            muted
+            loop
+          />
+        ) : (
+          <img 
+            src={imageUrl} 
+            alt={name} 
+            className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.src = 'https://via.placeholder.com/150?text=Image+Not+Found';
+              target.onerror = null;
+            }}
+          />
+        )}
         {discountPrice && (
           <Badge 
             className="absolute top-2 right-2 bg-accent text-white font-bold animate-pulse" 
