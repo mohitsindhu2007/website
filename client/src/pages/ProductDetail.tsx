@@ -202,24 +202,32 @@ const ProductDetail = () => {
                       />
                     </div>
 
-                    {/* Additional images thumbnails */}
+                    {/* Additional images/videos thumbnails */}
                     {product.additionalImages && product.additionalImages.length > 0 && 
-                      product.additionalImages.map((img, idx) => (
+                      product.additionalImages.map((media, idx) => (
                         <div 
                           key={idx} 
-                          className={`border-2 rounded-md overflow-hidden cursor-pointer transition-all ${selectedImage === img ? 'border-primary' : 'border-gray-200 hover:border-gray-300'}`}
-                          onClick={() => setSelectedImage(img)}
+                          className={`border-2 rounded-md overflow-hidden cursor-pointer transition-all ${selectedImage === media ? 'border-primary' : 'border-gray-200 hover:border-gray-300'}`}
+                          onClick={() => setSelectedImage(media)}
                         >
-                          <img 
-                            src={img} 
-                            alt={`${product.name} view ${idx+1}`}
-                            className="w-full h-16 object-cover" 
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.src = 'https://via.placeholder.com/150?text=Image+Not+Found';
-                              target.onerror = null;
-                            }}
-                          />
+                          {media.toLowerCase().endsWith('.mp4') ? (
+                            <video 
+                              src={media}
+                              className="w-full h-16 object-cover"
+                              muted
+                            />
+                          ) : (
+                            <img 
+                              src={media} 
+                              alt={`${product.name} view ${idx+1}`}
+                              className="w-full h-16 object-cover" 
+                              onError={(e) => {
+                                const target = e.target as HTMLImageElement;
+                                target.src = 'https://via.placeholder.com/150?text=Image+Not+Found';
+                                target.onerror = null;
+                              }}
+                            />
+                          )}
                         </div>
                       ))
                     }
