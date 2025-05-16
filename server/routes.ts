@@ -148,10 +148,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (isNaN(productId)) {
         return res.status(400).json({ message: "Invalid product ID" });
       }
-      const reviewData = { ...req.body, productId };
+      
+      const reviewData = insertProductReviewSchema.parse({
+        ...req.body,
+        productId,
+        createdAt: new Date().toISOString()
+      });
+      
       const newReview = await storage.createProductReview(reviewData);
       return res.status(201).json(newReview);
     } catch (error) {
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({ message: "Invalid review data", errors: error.errors });
+      }
+      console.error("Review creation error:", error);
       return res.status(500).json({ message: "Failed to create review" });
     }
   });

@@ -1,6 +1,6 @@
 import { Pool, neonConfig } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-serverless';
-import { eq } from 'drizzle-orm';
+import { eq, desc } from 'drizzle-orm';
 import ws from 'ws';
 import * as schema from '@shared/schema';
 import { 
@@ -8,7 +8,8 @@ import {
   ContactMessage, InsertContactMessage, 
   Testimonial, InsertTestimonial,
   User, InsertUser,
-  products, testimonials, contactMessages, users
+  ProductReview, InsertProductReview,
+  products, testimonials, contactMessages, users, productReviews
 } from "@shared/schema";
 
 neonConfig.webSocketConstructor = ws;
@@ -128,6 +129,22 @@ export class DatabaseStorage implements IStorage {
       .values(insertUser)
       .returning();
     return user;
+  }
+
+  async getProductReviews(productId: number): Promise<ProductReview[]> {
+    return db
+      .select()
+      .from(productReviews)
+      .where(eq(productReviews.productId, productId))
+      .orderBy(desc(productReviews.createdAt));
+  }
+
+  async createProductReview(review: InsertProductReview): Promise<ProductReview> {
+    const [newReview] = await db
+      .insert(productReviews)
+      .values(review)
+      .returning();
+    return newReview;
   }
 
   // Initialize database with sample data
