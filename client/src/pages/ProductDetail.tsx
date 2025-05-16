@@ -272,12 +272,12 @@ const ProductDetail = () => {
                     <div className="flex items-center space-x-6">
                       <div className="flex items-center">
                         <i className="fas fa-truck text-primary mr-2"></i>
-                        <span className="text-sm">Free Delivery</span>
+                        <span className="text-sm">Delivery charges extra</span>
                       </div>
                       
                       <div className="flex items-center">
                         <i className="fas fa-undo text-primary mr-2"></i>
-                        <span className="text-sm">7-Day Returns</span>
+                        <span className="text-sm">2-Day Returns</span>
                       </div>
                       
                       <div className="flex items-center">
