@@ -665,6 +665,7 @@ const Admin = () => {
                         <TableRow>
                           <TableHead>Name</TableHead>
                           <TableHead>Category</TableHead>
+                          <TableHead>Condition</TableHead>
                           <TableHead>Price</TableHead>
                           <TableHead>Featured</TableHead>
                           <TableHead>Actions</TableHead>
@@ -675,6 +676,15 @@ const Admin = () => {
                           <TableRow key={product.id}>
                             <TableCell className="font-medium">{product.name}</TableCell>
                             <TableCell>{product.category}</TableCell>
+                            <TableCell>
+                              <span className={`px-2 py-1 rounded-full text-xs ${
+                                product.condition === 'New' ? 'bg-green-100 text-green-800' :
+                                product.condition === 'Refurbished' ? 'bg-blue-100 text-blue-800' :
+                                'bg-gray-100 text-gray-800'
+                              }`}>
+                                {product.condition}
+                              </span>
+                            </TableCell>
                             <TableCell>
                               {product.discountPrice ? (
                                 <>
