@@ -39,6 +39,9 @@ const Contact = () => {
                       <div>
                         <h4 className="font-poppins font-semibold">Address</h4>
                         <p className="text-gray-600">Shop No. 82, New Anaaj Mandi<br/>Kalanaur, Rohtak, Haryana</p>
+                        <a href="https://maps.app.goo.gl/7QY6MTh4RhhobBCh7" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:text-blue-800 underline text-sm mt-1 inline-block">
+                          View on Google Maps
+                        </a>
                       </div>
                     </div>
                     
