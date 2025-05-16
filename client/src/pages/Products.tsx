@@ -57,10 +57,9 @@ const Products = () => {
   const filteredProducts = products ? products.filter(product => {
     // Handle special case for refurbished category
     if (activeCategory === "refurbished") {
-      if (product.condition !== "Refurbished") {
-        return false;
-      }
-    } else if (activeCategory !== "all" && product.category.toLowerCase() !== activeCategory) {
+      return product.condition === "Refurbished";
+    } 
+    if (activeCategory !== "all" && product.category.toLowerCase() !== activeCategory) {
       return false;
     }
     
