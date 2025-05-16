@@ -43,7 +43,7 @@ const Navbar = () => {
           <Link href="/">
             <a className="flex items-center hover:opacity-90 transition-opacity cursor-pointer">
               <img 
-                src="/assets/mr-sindhu-logo.svg" 
+                src="/assets/logo.svg" 
                 alt="Mr Sindhu Furniture and Electronics" 
                 className="h-16 w-auto mr-2"
               />
