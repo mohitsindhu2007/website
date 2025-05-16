@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    .main-text { font-family: 'Arial', sans-serif; font-weight: bold; fill: #1a365d; }
+    .sub-text { font-family: 'Arial', sans-serif; font-size: 14px; fill: #2d3748; }
+  </style>
+
+  <!-- Background Circle -->
+  <circle cx="100" cy="100" r="95" fill="#ffffff" stroke="#3182ce" stroke-width="4"/>
+  
+  <!-- Furniture Icon - Sofa -->
+  <g transform="translate(40, 80) scale(0.14)">
+    <path d="M563.8 91.1C469.38 88.08 363.3 107.5 248 145.08c-5.4 1.75-9.7 5.7-12.57 10.86l-20.3 36.7C149.9 175.46 77.98 168.3 11.7 178.57L0 181.27l26.15 69.16c2.33 6.17 6.74 10.88 12.15 13.22 5.4 2.34 11.75 2.52 17.5.47a479.64 479.64 0 0 1 77.8-21.95v26.83c0 81.3 118.3 100.35 169.45 90.1l297.57-59.7c30.17-6.06 51.2-32.8 51.2-64.14V200a39.88 39.88 0 0 0-6.92-22.6c-7.23-10.46-18.55-17.05-30.8-18.16l-50.2-4.64z" fill="#3182ce"/>
+    <path d="M395.25 164.8c-26.23-4.07-55.33-3.06-84.46 3l-127.76 26.3v84.83c0 4.57 2.94 8.84 7.42 10.56 12.6 4.82 50.46 15.82 92.46-2.5l127.76-55.08V182a9.8 9.8 0 0 0-8.28-10.2l-7.14-1z" fill="#1a365d"/>
+  </g>
+
+  <!-- Electronics Icon - TV -->
+  <g transform="translate(120, 80) scale(0.14)">
+    <rect x="0" y="0" width="300" height="200" rx="10" fill="#3182ce" />
+    <rect x="15" y="15" width="270" height="150" rx="5" fill="#1a365d" />
+    <rect x="120" y="200" width="60" height="20" fill="#3182ce" />
+    <rect x="100" y="220" width="100" height="10" fill="#3182ce" />
+  </g>
+
+  <!-- Text -->
+  <text x="100" y="40" class="main-text" text-anchor="middle" font-size="24">MR SINDHU</text>
+  <text x="100" y="150" class="sub-text" text-anchor="middle">FURNITURE &amp; ELECTRONICS</text>
+</svg>
