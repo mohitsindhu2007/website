@@ -12,6 +12,7 @@ interface ProductCardProps {
 const ProductCard = ({ product }: ProductCardProps) => {
   const { id, name, description, price, category, imageUrl, discountPrice, condition } = product;
   const [isVisible, setIsVisible] = useState(false);
+  const [displayImage, setDisplayImage] = useState(imageUrl); // Initialize with imageUrl
 
   useEffect(() => {
     // Add a slight delay for staggered animation effect
@@ -31,6 +32,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
     }
   };
 
+    // Function to handle image loading errors
+    const handleImageError = () => {
+        setDisplayImage('https://via.placeholder.com/150?text=Image+Not+Found');
+    };
+
+
   return (
     <Card 
       className={`bg-white rounded-lg overflow-hidden shadow-md transform transition-all duration-500 ${
@@ -41,14 +48,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
     >
       <div className="relative overflow-hidden group">
         <img 
-          src={imageUrl} 
+          src={displayImage} 
           alt={name} 
           className="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-110"
-          onError={(e) => {
-            const target = e.target as HTMLImageElement;
-            target.src = 'https://via.placeholder.com/150?text=Image+Not+Found';
-            target.onerror = null;
-          }}
+          onError={handleImageError}
         />
         {discountPrice && (
           <Badge 
