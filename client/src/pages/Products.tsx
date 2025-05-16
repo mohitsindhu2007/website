@@ -148,6 +148,16 @@ const Products = () => {
                       />
                       <span>Electronics</span>
                     </label>
+                    <label className="flex items-center space-x-2 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="category"
+                        checked={activeCategory === "refurbished"}
+                        onChange={() => setActiveCategory("refurbished")}
+                        className="text-primary"
+                      />
+                      <span>Refurbished</span>
+                    </label>
                   </div>
                 </div>
                 
