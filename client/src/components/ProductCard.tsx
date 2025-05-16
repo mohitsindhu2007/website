@@ -18,7 +18,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
     const timer = setTimeout(() => {
       setIsVisible(true);
     }, Math.random() * 300);
-    
+
     return () => clearTimeout(timer);
   }, []);
 
@@ -85,14 +85,19 @@ const ProductCard = ({ product }: ProductCardProps) => {
           ) : (
             <span className="font-bold text-lg">₹{price.toLocaleString()}</span>
           )}
-          <Link href={`/product/${id}`}>
-            <Button 
-              size="sm" 
-              className="bg-accent text-white hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
-            >
-              View Details
+          <div className="flex items-center gap-2">
+            <Button size="icon" variant="outline" className="rounded-full">
+              <i className="fas fa-shopping-cart"></i>
             </Button>
-          </Link>
+            <Link href={`/product/${id}`}>
+              <Button 
+                size="sm" 
+                className="bg-accent text-white hover:bg-opacity-90 transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
+              >
+                View Details
+              </Button>
+            </Link>
+          </div>
         </div>
       </CardContent>
     </Card>
