@@ -42,8 +42,9 @@ const Navbar = () => {
         <div className="flex items-center">
           <Link href="/">
             <a className="flex items-center hover:opacity-90 transition-opacity cursor-pointer">
-              <div className="flex items-center justify-center bg-blue-600 text-white h-12 w-12 rounded-full mr-2">
-                <span className="font-bold text-lg">MS</span>
+              <div className="flex flex-col items-center justify-center bg-gradient-to-r from-blue-700 to-blue-500 text-white h-12 w-12 rounded-md mr-3 shadow-md transform transition-all duration-300 hover:scale-110">
+                <span className="font-bold text-xs">MR</span>
+                <span className="font-bold text-xs">SINDHU</span>
               </div>
               <span className="font-poppins font-bold text-xl md:text-2xl">
                 Mr Sindhu

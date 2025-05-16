@@ -78,13 +78,13 @@ const Contact = () => {
               <div className="rounded-lg overflow-hidden shadow-md h-80">
                 {/* Google Map Embed - Precise Location */}
                 <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d442.0060195671864!2d76.4022917!3d29.0363359!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjnCsDAyJzEwLjgiTiA3NsKwMjQnMDguMyJF!5e0!3m2!1sen!2sin!4v1715683401747!5m2!1sen!2sin" 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3490.8775241173743!2d76.39858947515415!3d28.982222075645998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390db33c9ac9cec7%3A0x5ba9ea73e8be5798!2sKalanaur%2C%20Haryana%20124113!5e0!3m2!1sen!2sin!4v1716057623483!5m2!1sen!2sin" 
                   width="100%" 
                   height="100%" 
                   style={{ border: 0 }} 
                   allowFullScreen={true} 
                   loading="lazy"
-                  title="Mr Sindhu Furniture and Electronics - Shop No. 82, New Anaj Mandi, Kalanaur"
+                  title="Mr Sindhu Furniture and Electronics - Shop No. 82, New Anaaj Mandi, Kalanaur, Rohtak, Haryana"
                   referrerPolicy="no-referrer-when-downgrade"
                 ></iframe>
               </div>
