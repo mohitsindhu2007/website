@@ -274,6 +274,11 @@ const Admin = () => {
       filesToUpload.forEach(file => {
         formData.append('images', file);
       });
+
+      toast({
+        title: "अपलोड हो रहा है",
+        description: "कृपया प्रतीक्षा करें...",
+      });
       
       // Show uploading toast
       toast({

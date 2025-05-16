@@ -19,10 +19,15 @@ if (!fs.existsSync(UPLOADS_DIR)) {
 // Configure storage
 const storage = multer.diskStorage({
   destination: (_req, _file, cb) => {
+    // Ensure uploads directory exists
+    if (!fs.existsSync(UPLOADS_DIR)) {
+      fs.mkdirSync(UPLOADS_DIR, { recursive: true });
+    }
     cb(null, UPLOADS_DIR);
   },
   filename: (_req, file, cb) => {
-    const uniqueFilename = `${uuidv4()}${path.extname(file.originalname)}`;
+    // Create a unique filename while preserving the original extension
+    const uniqueFilename = `${uuidv4()}${path.extname(file.originalname).toLowerCase()}`;
     cb(null, uniqueFilename);
   },
 });
