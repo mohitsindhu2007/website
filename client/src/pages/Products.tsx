@@ -55,7 +55,12 @@ const Products = () => {
   }, [location]);
 
   const filteredProducts = products ? products.filter(product => {
-    if (activeCategory !== "all" && product.category.toLowerCase() !== activeCategory) {
+    // Handle special case for refurbished category
+    if (activeCategory === "refurbished") {
+      if (product.condition !== "Refurbished") {
+        return false;
+      }
+    } else if (activeCategory !== "all" && product.category.toLowerCase() !== activeCategory) {
       return false;
     }
     
@@ -190,7 +195,9 @@ const Products = () => {
                       ? "All Products" 
                       : activeCategory === "furniture" 
                         ? "Furniture" 
-                        : "Electronics"}
+                        : activeCategory === "electronics"
+                          ? "Electronics"
+                          : "Refurbished Products"}
                   </h2>
                   <p className="text-gray-500">
                     {sortedProducts.length} {sortedProducts.length === 1 ? "product" : "products"} found
