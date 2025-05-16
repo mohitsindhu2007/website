@@ -9,7 +9,7 @@ const WhatsAppButton = () => {
       <Tooltip>
         <TooltipTrigger asChild>
           <a 
-            href={`https://wa.me/${phoneNumber}`} 
+            href="https://chat.whatsapp.com/Er8ZCz3vwJ1ATvvzMCOxUj" 
             target="_blank" 
             rel="noopener noreferrer"
             className="fixed bottom-6 right-6 z-50"

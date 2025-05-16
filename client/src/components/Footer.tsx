@@ -37,10 +37,10 @@ const Footer = () => {
               We bring comfort and technology to your home.
             </p>
             <div className="flex space-x-4">
-              <a href="https://facebook.com/mrsindhu" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-accent transition-colors">
+              <a href="https://www.facebook.com/share/15beMEpHtB/" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-accent transition-colors">
                 <i className="fab fa-facebook-f"></i>
               </a>
-              <a href="https://instagram.com/mr.sindhu" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-accent transition-colors">
+              <a href="https://www.instagram.com/jombir_sindhu?igsh=MXBjems5d3Z4MXVieA==" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-accent transition-colors">
                 <i className="fab fa-instagram"></i>
               </a>
               <a href="https://youtube.com/@officialowner1?si=27NuGb6T2vGVGjsE" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-accent transition-colors">
