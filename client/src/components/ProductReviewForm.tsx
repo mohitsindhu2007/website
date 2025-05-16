@@ -12,8 +12,9 @@ import { useToast } from "@/hooks/use-toast";
 
 const reviewSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
-  rating: z.number().min(1).max(5),
+  rating: z.coerce.number().min(1).max(5),
   review: z.string().min(10, "Review must be at least 10 characters"),
+  productId: z.number(),
 });
 
 interface ProductReviewFormProps {
@@ -61,7 +62,10 @@ export default function ProductReviewForm({ productId }: ProductReviewFormProps)
   });
 
   const onSubmit = (data: z.infer<typeof reviewSchema>) => {
-    submitReview.mutate(data);
+    submitReview.mutate({
+      ...data,
+      productId: productId
+    });
   };
 
   return (
