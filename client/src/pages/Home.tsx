@@ -67,9 +67,15 @@ const Home = () => {
                 </TabsTrigger>
                 <TabsTrigger 
                   value="electronics" 
-                  className="px-6 py-2 text-sm font-medium rounded-r-lg"
+                  className="px-6 py-2 text-sm font-medium"
                 >
                   Electronics
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="refurbished" 
+                  className="px-6 py-2 text-sm font-medium rounded-r-lg"
+                >
+                  Refurbished
                 </TabsTrigger>
               </TabsList>
             </div>
@@ -110,6 +116,20 @@ const Home = () => {
                   ))
                 ) : (
                   products?.filter(p => p.category === "Electronics").slice(0, 8).map((product) => (
+                    <ProductCard key={product.id} product={product} />
+                  ))
+                )}
+              </div>
+            </TabsContent>
+            
+            <TabsContent value="refurbished">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {isLoading ? (
+                  Array.from({ length: 4 }).map((_, index) => (
+                    <ProductCardSkeleton key={index} />
+                  ))
+                ) : (
+                  products?.filter(p => p.condition === "Refurbished").slice(0, 8).map((product) => (
                     <ProductCard key={product.id} product={product} />
                   ))
                 )}
