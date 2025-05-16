@@ -8,9 +8,10 @@ import { Separator } from "@/components/ui/separator";
 import ProductCard from "@/components/ProductCard";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
-import { Product } from "@shared/schema";
+import { Product, ProductReview } from "@shared/schema";
 import Zoom from 'react-medium-image-zoom';
 import 'react-medium-image-zoom/dist/styles.css';
+import ProductReviewForm from "@/components/ProductReviewForm";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -72,11 +73,11 @@ const ProductDetail = () => {
 
   const handleAddToCart = () => {
     if (!product) return;
-    
+
     // Check if product is already in cart
     const isInCart = cartItems.some(item => item.id === product.id);
     let updatedCart;
-    
+
     if (isInCart) {
       // Update quantity logic could be added here
       toast({
@@ -89,10 +90,10 @@ const ProductDetail = () => {
       // Add to cart
       updatedCart = [...cartItems, product];
       setCartItems(updatedCart);
-      
+
       // Save to localStorage
       localStorage.setItem('cart', JSON.stringify(updatedCart));
-      
+
       toast({
         title: "Added to cart!",
         description: `${product.name} has been added to your cart.`,
@@ -150,7 +151,7 @@ const ProductDetail = () => {
                 </ol>
               </nav>
             </div>
-            
+
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
               <div>
                 <div className="bg-white rounded-lg overflow-hidden shadow-md">
@@ -169,7 +170,7 @@ const ProductDetail = () => {
                       />
                     </Zoom>
                   </div>
-                  
+
                   {/* Thumbnails for all images (main + additional) */}
                   <div className="mt-4 grid grid-cols-5 gap-2">
                     {/* Main image thumbnail */}
@@ -188,7 +189,7 @@ const ProductDetail = () => {
                         }}
                       />
                     </div>
-                    
+
                     {/* Additional images thumbnails */}
                     {product.additionalImages && product.additionalImages.length > 0 && 
                       product.additionalImages.map((img, idx) => (
@@ -213,17 +214,17 @@ const ProductDetail = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div>
                 <div className="bg-white p-8 rounded-lg shadow-md">
                   <h1 className="font-poppins font-bold text-3xl mb-2">{product.name}</h1>
-                  
+
                   <Badge 
                     className={product.category === "Furniture" ? "bg-primary" : "bg-secondary"}
                   >
                     {product.category}
                   </Badge>
-                  
+
                   <div className="mt-6">
                     {product.discountPrice ? (
                       <div className="flex items-center">
@@ -239,14 +240,14 @@ const ProductDetail = () => {
                       <span className="font-bold text-3xl">₹{product.price.toLocaleString()}</span>
                     )}
                   </div>
-                  
+
                   <Separator className="my-6" />
-                  
+
                   <div className="mb-6">
                     <h3 className="font-poppins font-semibold text-lg mb-2">Description</h3>
                     <p className="text-gray-700">{product.description}</p>
                   </div>
-                  
+
                   <div className="mt-8 space-y-3">
                     <Button 
                       onClick={handleAddToCart}
@@ -256,7 +257,7 @@ const ProductDetail = () => {
                       <i className="fas fa-shopping-cart mr-2"></i>
                       Add to Cart
                     </Button>
-                    
+
                     <Button 
                       onClick={handleContactUs}
                       variant="outline" 
@@ -267,19 +268,19 @@ const ProductDetail = () => {
                       Inquire About This Product
                     </Button>
                   </div>
-                  
+
                   <div className="mt-8">
                     <div className="flex items-center space-x-6">
                       <div className="flex items-center">
                         <i className="fas fa-truck text-primary mr-2"></i>
                         <span className="text-sm">Delivery charges extra</span>
                       </div>
-                      
+
                       <div className="flex items-center">
                         <i className="fas fa-undo text-primary mr-2"></i>
                         <span className="text-sm">2-Day Returns</span>
                       </div>
-                      
+
                       <div className="flex items-center">
                         <i className="fas fa-shield-alt text-primary mr-2"></i>
                         <span className="text-sm">Warranty</span>
@@ -289,10 +290,10 @@ const ProductDetail = () => {
                 </div>
               </div>
             </div>
-            
+
             <div className="mt-16">
               <h2 className="font-poppins font-bold text-2xl mb-8">Related Products</h2>
-              
+
               {isRelatedLoading ? (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                   {Array.from({ length: 4 }).map((_, index) => (
@@ -320,7 +321,7 @@ const ProductDetail = () => {
                     <h3 className="font-semibold text-xl mb-6">Write a Review</h3>
                     <ProductReviewForm productId={product.id} />
                   </div>
-                  
+
                   <div className="bg-white p-8 rounded-lg shadow-md">
                     <h3 className="font-semibold text-xl mb-6">Recent Reviews</h3>
                     {product.reviews && product.reviews.length > 0 ? (

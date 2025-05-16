@@ -3,18 +3,11 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useToast } from "@/hooks/use-toast";
 
 const reviewSchema = z.object({
@@ -56,7 +49,7 @@ export default function ProductReviewForm({ productId }: ProductReviewFormProps)
         description: "Thank you for your feedback!",
       });
       form.reset();
-      queryClient.invalidateQueries({ queryKey: [`/api/products/${productId}`] });
+      queryClient.invalidateQueries({ queryKey: [`/api/products/${productId}/reviews`] });
     },
     onError: () => {
       toast({
@@ -67,9 +60,13 @@ export default function ProductReviewForm({ productId }: ProductReviewFormProps)
     },
   });
 
+  const onSubmit = (data: z.infer<typeof reviewSchema>) => {
+    submitReview.mutate(data);
+  };
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit((data) => submitReview.mutate(data))} className="space-y-4">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
           name="name"
@@ -83,27 +80,27 @@ export default function ProductReviewForm({ productId }: ProductReviewFormProps)
             </FormItem>
           )}
         />
-        
+
         <FormField
           control={form.control}
           name="rating"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Rating</FormLabel>
+              <FormLabel>Rating (1-5)</FormLabel>
               <FormControl>
                 <Input 
                   type="number" 
                   min={1} 
                   max={5} 
                   {...field} 
-                  onChange={e => field.onChange(parseInt(e.target.value))}
+                  onChange={(e) => field.onChange(parseInt(e.target.value))}
                 />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        
+
         <FormField
           control={form.control}
           name="review"
@@ -111,14 +108,21 @@ export default function ProductReviewForm({ productId }: ProductReviewFormProps)
             <FormItem>
               <FormLabel>Your Review</FormLabel>
               <FormControl>
-                <Textarea placeholder="Write your review here..." {...field} />
+                <Textarea 
+                  placeholder="Write your review here..."
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <Button type="submit" className="w-full">
+        <Button 
+          type="submit" 
+          className="w-full"
+          disabled={submitReview.isPending}
+        >
           Submit Review
         </Button>
       </form>
