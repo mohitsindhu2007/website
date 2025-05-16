@@ -131,14 +131,14 @@ const ProductDetail = () => {
                 <ol className="inline-flex items-center space-x-1 md:space-x-3">
                   <li className="inline-flex items-center">
                     <Link href="/">
-                      <a className="text-gray-600 hover:text-primary">Home</a>
+                      <div className="text-gray-600 hover:text-primary cursor-pointer">Home</div>
                     </Link>
                   </li>
                   <li>
                     <div className="flex items-center">
                       <span className="mx-2 text-gray-400">/</span>
                       <Link href="/products">
-                        <a className="text-gray-600 hover:text-primary">Products</a>
+                        <div className="text-gray-600 hover:text-primary cursor-pointer">Products</div>
                       </Link>
                     </div>
                   </li>
