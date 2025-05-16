@@ -42,11 +42,9 @@ const Navbar = () => {
         <div className="flex items-center">
           <Link href="/">
             <a className="flex items-center hover:opacity-90 transition-opacity cursor-pointer">
-              <img 
-                src="/assets/logo.svg" 
-                alt="Mr Sindhu Furniture and Electronics" 
-                className="h-16 w-auto mr-2"
-              />
+              <div className="flex items-center justify-center bg-blue-600 text-white h-12 w-12 rounded-full mr-2">
+                <span className="font-bold text-lg">MS</span>
+              </div>
               <span className="font-poppins font-bold text-xl md:text-2xl">
                 Mr Sindhu
               </span>
