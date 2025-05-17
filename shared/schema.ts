@@ -30,7 +30,7 @@ export const contactMessages = pgTable("contact_messages", {
 
 export const insertContactMessageSchema = createInsertSchema(contactMessages).omit({
   id: true,
-  createdAt: true,
+  created_at: true,
 });
 
 export type InsertProduct = z.infer<typeof insertProductSchema>;

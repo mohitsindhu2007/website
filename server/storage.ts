@@ -93,7 +93,7 @@ export class DatabaseStorage implements IStorage {
       .insert(contactMessages)
       .values({
         ...insertMessage,
-        createdAt: new Date().toISOString()
+        created_at: new Date().toISOString()
       })
       .returning();
     return message;
