@@ -5,14 +5,14 @@ import { z } from "zod";
 export const products = pgTable("products", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
-  description: text("description").notNull(),
+  description: text("description"),
   price: integer("price").notNull(),
   category: text("category").notNull(),
-  condition: text("condition").notNull().default("New"),
-  imageUrl: text("image_url").notNull(),
+  imageUrl: text("image_url"),
   additionalImages: text("additional_images").array(),
   featured: boolean("featured").default(false),
   discountPrice: integer("discount_price"),
+  stockCount: integer("stock_count").default(0),
 });
 
 export const insertProductSchema = createInsertSchema(products).omit({
@@ -23,9 +23,9 @@ export const contactMessages = pgTable("contact_messages", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
   email: text("email").notNull(),
-  phone: text("phone").notNull(),
+  phone: text("phone"),
   message: text("message").notNull(),
-  createdAt: text("created_at").notNull().default(new Date().toISOString()),
+  created_at: text("created_at").default(new Date().toISOString()),
 });
 
 export const insertContactMessageSchema = createInsertSchema(contactMessages).omit({
@@ -41,14 +41,16 @@ export type ContactMessage = typeof contactMessages.$inferSelect;
 
 export const testimonials = pgTable("testimonials", {
   id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  location: text("location").notNull(),
+  customer_name: text("customer_name").notNull(),
+  location: text("location"),
   rating: integer("rating").notNull(),
-  review: text("review").notNull(),
+  content: text("content").notNull(),
+  created_at: text("created_at").default(new Date().toISOString()),
 });
 
 export const insertTestimonialSchema = createInsertSchema(testimonials).omit({
   id: true,
+  created_at: true,
 });
 
 export type InsertTestimonial = z.infer<typeof insertTestimonialSchema>;

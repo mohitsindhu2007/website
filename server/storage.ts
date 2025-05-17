@@ -232,24 +232,24 @@ export class DatabaseStorage implements IStorage {
       
       if (existingTestimonials.length === 0) {
         await this.createTestimonial({
-          name: "Sunil Kumar",
+          customer_name: "Sunil Kumar",
           location: "Rohtak",
           rating: 5,
-          review: "Jombir bhai ne humein bahut accha furniture provide kiya, quality ekdum top class hai aur delivery time par hui."
+          content: "Jombir bhai ne humein bahut accha furniture provide kiya, quality ekdum top class hai aur delivery time par hui."
         });
 
         await this.createTestimonial({
-          name: "Mohan Singh",
+          customer_name: "Mohan Singh",
           location: "Kalanaur",
           rating: 5,
-          review: "Maine Mr Sindhu se Samsung ka TV kharida, installation team ne sab kuch achhe se set karke diya aur product bhi badhiya hai."
+          content: "Maine Mr Sindhu se Samsung ka TV kharida, installation team ne sab kuch achhe se set karke diya aur product bhi badhiya hai."
         });
 
         await this.createTestimonial({
-          name: "Poonam & Rajesh",
+          customer_name: "Poonam & Rajesh",
           location: "Rohtak",
           rating: 4,
-          review: "Humne apne naye ghar ke liye saara furniture Mr Sindhu se liya. Daam thik hai aur quality acchi hai. Highly recommended!"
+          content: "Humne apne naye ghar ke liye saara furniture Mr Sindhu se liya. Daam thik hai aur quality acchi hai. Highly recommended!"
         });
       }
     }
