@@ -1,12 +1,14 @@
 // This is a serverless function for Netlify to handle your API requests
 const express = require('express');
 const serverless = require('serverless-http');
-const cors = require('cors');
 const app = express();
+
+// Use middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Import your routes or create them here
 // This is just a placeholder - you'll need to adapt this to your actual API
-app.use(cors());
 app.use(express.json());
 
 app.get('/api/test', (req, res) => {
