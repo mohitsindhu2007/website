@@ -1,6 +1,10 @@
 // This script ensures that the _redirects file is copied to the dist folder during build
-const fs = require('fs');
-const path = require('path');
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Make sure the dist directory exists
 if (!fs.existsSync('dist')) {
